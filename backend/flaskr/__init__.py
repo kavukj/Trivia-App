@@ -8,6 +8,13 @@ from models import setup_db, Question, Category
 
 QUESTIONS_PER_PAGE = 10
 
+def paginate(request,questions):
+    page = request.args.get('page',1,type=int)
+    start = (page - 1) * QUESTIONS_PER_PAGE
+    end = start + QUESTIONS_PER_PAGE
+    format_questions = [question.format() for question in questions]
+    return format_questions[start:end]
+
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__)
@@ -50,18 +57,20 @@ def create_app(test_config=None):
 
     @app.route("/questions",methods=["GET"])
     def get_questions():
-        questions = Question.query.all()
+        questions = Question.query.order_by(Question.id).all()
         categories = Category.query.all()
-        format_questions = [question.format() for question in questions]
         format_categories = [category.format() for category in categories]
-        if format_questions:
+        paginate_question = paginate(request,questions)
+        if len(paginate_question) > 0:
             return jsonify({
                 'success':True,
-                'questions':format_questions,
+                'questions':paginate_question,
                 'total_questions':len(questions),
                 'categories':format_categories,
                 'current_category':None
-            })    
+            })  
+        else:
+            abort(400)  
 
     """
     @TODO:
@@ -119,6 +128,14 @@ def create_app(test_config=None):
     Create error handlers for all expected errors
     including 404 and 422.
     """
+    @app.errorhandler(400)
+    def bad_request(error):
+         return jsonify({
+            "success": False, 
+            "error": 400,
+            "message": "Cannot Process request"
+            }), 400
+
 
     return app
 

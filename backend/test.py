@@ -25,5 +25,12 @@ class TriviaTestCase(unittest.TestCase):
         self.assertTrue(data['total_questions'])
         self.assertEqual(len(data['categories']),6)
 
+    def test_no_questions(self):
+        res = self.client().get("http://127.0.0.1:5000/questions?page=1000")
+        data = json.loads(res.data)
+        self.assertEqual(res.status_code,400)
+        self.assertEqual(data['success'],False)
+        self.assertEqual(data['message'],"Cannot Process request")
+
 if __name__ == "__main__":
         unittest.main()
