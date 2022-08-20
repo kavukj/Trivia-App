@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../stylesheets/App.css';
+import '../stylesheets/Question.css';
 import Question from './Question';
 import Search from './Search';
 import $ from 'jquery';
@@ -140,16 +141,17 @@ class QuestionView extends Component {
           <ul>
             {Object.keys(this.state.categories).map((id) => (
               <li
+              className='category'
                 key={id}
                 onClick={() => {
                   this.getByCategory(id);
                 }}
               >
-                {this.state.categories[id]}
+                {this.state.categories[id].type} &nbsp;
                 <img
                   className='category'
-                  alt={`${this.state.categories[id].toLowerCase()}`}
-                  src={`${this.state.categories[id].toLowerCase()}.svg`}
+                  alt={`${this.state.categories[id].type}`}
+                  src={`${this.state.categories[id].type.toLowerCase()}.svg`}
                 />
               </li>
             ))}
