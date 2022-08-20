@@ -1,3 +1,4 @@
+import json
 import unittest
 from flask import Flask
 import unittest
@@ -16,5 +17,13 @@ class TriviaTestCase(unittest.TestCase):
     def tearDown(self):
         pass
 
-    if __name__ == "__main__":
+    def test_get_questions(self):
+        res = self.client().get("http://127.0.0.1:5000/questions")
+        data = json.loads(res.data)
+        self.assertEqual(res.status_code,200)
+        self.assertEqual(data['success'],True)
+        self.assertTrue(data['total_questions'])
+        self.assertEqual(len(data['categories']),6)
+
+if __name__ == "__main__":
         unittest.main()

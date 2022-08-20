@@ -1,4 +1,4 @@
-import os
+from unicodedata import category
 from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
@@ -47,6 +47,21 @@ def create_app(test_config=None):
     ten questions per page and pagination at the bottom of the screen for three pages.
     Clicking on the page numbers should update the questions.
     """
+
+    @app.route("/questions",methods=["GET"])
+    def get_questions():
+        questions = Question.query.all()
+        categories = Category.query.all()
+        format_questions = [question.format() for question in questions]
+        format_categories = [category.format() for category in categories]
+        if format_questions:
+            return jsonify({
+                'success':True,
+                'questions':format_questions,
+                'total_questions':len(questions),
+                'categories':format_categories,
+                'current_category':None
+            })    
 
     """
     @TODO:
