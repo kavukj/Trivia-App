@@ -50,5 +50,18 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['success'],False)
         self.assertEqual(data['message'],"Cannot Process request")
 
+    #Create Questions
+    def test_create_question(self):
+        res = self.client().post("/questions",json={'question':'Where is Taj Mahal?','answer':'Agra','difficulty':'2','category':4})
+        data = json.loads(res.data)
+        self.assertEqual(res.status_code,200)
+        self.assertEqual(data['success'],True)
+
+    def test_create_question_with_no_data(self):
+        res=self.client().post("/questions")
+        data = json.loads(res.data)
+        self.assertEqual(res.status_code,400)
+        self.assertEqual(data['message'],'Cannot Process request')
+
 if __name__ == "__main__":
         unittest.main()
