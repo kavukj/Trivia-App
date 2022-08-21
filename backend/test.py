@@ -2,9 +2,8 @@ import json
 import unittest
 from flask import Flask
 import unittest
-
 from flaskr import create_app
-from models import setup_db
+from models import setup_db, Question
 
 
 class TriviaTestCase(unittest.TestCase):
@@ -24,6 +23,8 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(res.status_code,200)
         self.assertEqual(data['success'],True)
         self.assertTrue(data['total_questions'])
+        self.assertTrue(data['questions'])
+        self.assertEqual(data['current_category'],None)
         self.assertEqual(len(data['categories']),6)
 
     def test_no_questions(self):
@@ -62,6 +63,26 @@ class TriviaTestCase(unittest.TestCase):
         data = json.loads(res.data)
         self.assertEqual(res.status_code,400)
         self.assertEqual(data['message'],'Cannot Process request')
+
+    #Delete Questions
+    def test_delete_question(self):
+        res=self.client().delete("/questions/11")
+        data = json.loads(res.data)
+        question = Question.query.filter(Question.id==4).one_or_none()
+        self.assertEqual(question,None)
+        self.assertEqual(res.status_code,200)
+        self.assertEqual(data['success'],True)
+        self.assertEqual(len(data['categories']),6)
+        self.assertEqual(data['current_category'],None)
+        self.assertTrue(data['questions'])
+        self.assertTrue(data['total_questions'])
+
+    def test_delete_wrong_question(self):
+        res=self.client().delete("/questions/10")
+        data = json.loads(res.data)
+        self.assertEqual(res.status_code,500)
+        self.assertEqual(data['message'],"Internal Server Error")
+        self.assertEqual(data['error'],500)
 
 if __name__ == "__main__":
         unittest.main()
