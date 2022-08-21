@@ -52,7 +52,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['message'],"Page Not Found")
 
     #Create Questions
-    def test_create_question(self):
+    def create_question(self):
         res = self.client().post("/questions",json={'question':'Where is Taj Mahal?','answer':'Agra','difficulty':'2','category':4})
         data = json.loads(res.data)
         self.assertEqual(res.status_code,200)
@@ -65,7 +65,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['message'],'Bad Request')
 
     #Delete Questions
-    def test_delete_question(self):
+    def delete_question(self):
         res=self.client().delete("/questions/15")
         data = json.loads(res.data)
         question = Question.query.filter(Question.id==4).one_or_none()
@@ -83,6 +83,23 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(res.status_code,500)
         self.assertEqual(data['message'],"Internal Server Error")
         self.assertEqual(data['error'],500)
+
+    #Search Questions
+    def test_questions_with_search_value(self):
+        res = self.client().post("/search",json={"searchTerm":"movie"})
+        data = json.loads(res.data)
+        self.assertEqual(res.status_code,200)
+        self.assertEqual(data['success'],True)
+        self.assertTrue(data['questions'])
+        self.assertEqual(data['total_questions'],1)
+
+    def test_questions_with_wrong_search_parameter(self):
+        res = self.client().post("/search",json={"searc":"movie"})
+        data = json.loads(res.data)
+        print(res.status_code)
+        self.assertEqual(res.status_code,404)
+        self.assertEqual(data['error'],404)
+        self.assertEqual(data['message'],"Page Not Found")
 
 if __name__ == "__main__":
         unittest.main()

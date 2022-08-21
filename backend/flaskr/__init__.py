@@ -39,7 +39,7 @@ def create_app(test_config=None):
         categories = Category.query.all()
         format_categories = [category.format() for category in categories]
         paginate_question = paginate(request,questions)
-        if len(paginate_question) > 0:
+        if len(paginate_question) != 0:
             return jsonify({
                 'success':True,
                 'questions':paginate_question,
@@ -101,6 +101,26 @@ def create_app(test_config=None):
     only question that include that string within their question.
     Try using the word "title" to start.
     """
+    @app.route("/search",methods=['POST'])
+    def search_questions():
+        try:
+            search_term = request.get_json().get('searchTerm', None)
+            questions = Question.query.filter(Question.question.ilike("%{}%".format(search_term))).all()
+            categories = Category.query.all()
+            format_categories = [category.format() for category in categories]
+            paginate_question = paginate(request,questions)
+            # if len(paginate_question) == 0:
+            #     abort(400) 
+            # else:
+            return jsonify({
+                'success':True,
+                'questions':paginate_question,
+                'total_questions':len(questions),
+                'categories':format_categories,
+                'current_category':None
+            })  
+        except:
+                abort(404)
 
     '''Route to Get all categories'''
     @app.route('/categories')
