@@ -6,6 +6,7 @@
 .category{
   font-size: 20px;
   cursor: pointer;
+  vertical-align: middle;
 }
 
 .categories-list {
@@ -34,6 +35,7 @@
   flex-direction: row;
   height: 30px;
   width: 200px;
+  margin-top: 10px;
   align-items: center;
   justify-content: space-between;
 }
@@ -43,13 +45,27 @@
   width: 100%;
 }
 
+.difficulty{
+  font-size: 14px;
+}
+
+.difficulty-hard{
+  color:rgb(246, 84, 62);
+}
+
+.difficulty-low{
+  color:rgb(8, 186, 47);
+}
+
 .answer-holder {
-  font-size: 25px;
+  font-size: 18px;
+  color:rgb(30, 170, 234);
   height: 25px;
-  margin: 5px 0px;
+  margin: 10px 0px 0px 0px;
 }
 
 .show-answer {
+  cursor: pointer;
   width: 100px;
   margin-top: 5px;
   background-color: dodgerblue;
@@ -63,6 +79,7 @@ span.page-num {
   padding-bottom: 50px;
   /* color: blue; */
   font-weight: bolder;
+  cursor: pointer;
   text-decoration: underline;
   font-size: 16px;
 }
@@ -77,4 +94,5 @@ img.category {
 
 img.delete {
   width: 20px;
+  cursor: pointer;
 }
