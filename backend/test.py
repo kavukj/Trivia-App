@@ -32,7 +32,7 @@ class TriviaTestCase(unittest.TestCase):
         data = json.loads(res.data)
         self.assertEqual(res.status_code,400)
         self.assertEqual(data['success'],False)
-        self.assertEqual(data['message'],"Cannot Process request")
+        self.assertEqual(data['message'],"Bad Request")
 
     #Get Question by category
     def test_get_question_by_category(self):
@@ -47,9 +47,9 @@ class TriviaTestCase(unittest.TestCase):
     def test_get_question_invalid_category(self):
         res = self.client().get("/categories/0/questions")
         data = json.loads(res.data)
-        self.assertEqual(res.status_code,400)
+        self.assertEqual(res.status_code,404)
         self.assertEqual(data['success'],False)
-        self.assertEqual(data['message'],"Cannot Process request")
+        self.assertEqual(data['message'],"Page Not Found")
 
     #Create Questions
     def test_create_question(self):
@@ -62,11 +62,11 @@ class TriviaTestCase(unittest.TestCase):
         res=self.client().post("/questions")
         data = json.loads(res.data)
         self.assertEqual(res.status_code,400)
-        self.assertEqual(data['message'],'Cannot Process request')
+        self.assertEqual(data['message'],'Bad Request')
 
     #Delete Questions
     def test_delete_question(self):
-        res=self.client().delete("/questions/11")
+        res=self.client().delete("/questions/15")
         data = json.loads(res.data)
         question = Question.query.filter(Question.id==4).one_or_none()
         self.assertEqual(question,None)
