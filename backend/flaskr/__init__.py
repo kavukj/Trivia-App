@@ -104,23 +104,24 @@ def create_app(test_config=None):
     @app.route("/search",methods=['POST'])
     def search_questions():
         try:
-            search_term = request.get_json().get('searchTerm', None)
-            questions = Question.query.filter(Question.question.ilike("%{}%".format(search_term))).all()
-            categories = Category.query.all()
-            format_categories = [category.format() for category in categories]
-            paginate_question = paginate(request,questions)
-            # if len(paginate_question) == 0:
-            #     abort(400) 
-            # else:
-            return jsonify({
-                'success':True,
-                'questions':paginate_question,
-                'total_questions':len(questions),
-                'categories':format_categories,
-                'current_category':None
-            })  
+            search_term = request.get_json().get('searchTerm')
+            if (search_term):
+                questions = Question.query.filter(Question.question.ilike("%{}%".format(search_term))).all()
+                categories = Category.query.all()
+                format_categories = [category.format() for category in categories]
+                paginate_question = paginate(request,questions)
+                return jsonify({
+                    'success':True,
+                    'questions':paginate_question,
+                    'total_questions':len(questions),
+                    'categories':format_categories,
+                    'current_category':None
+                })  
+            else:
+                abort(404)
         except:
                 abort(404)
+
 
     '''Route to Get all categories'''
     @app.route('/categories')
@@ -141,7 +142,6 @@ def create_app(test_config=None):
             questions = Question.query.filter(Question.category == id).order_by(Question.id).all()
             category = Category.query.filter(Category.id == id).with_entities(Category.type).one_or_none()
             format_questions = paginate(request,questions)
-            print(category[0])
             return jsonify({
                 'success':True,
                 'questions':format_questions,
