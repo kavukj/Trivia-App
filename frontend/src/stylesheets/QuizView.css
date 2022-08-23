@@ -20,17 +20,22 @@
 }
 
 .button {
-    width: 100px;
-    margin-top: 5px;
+    width: 120px;
+    margin: 10px auto;
     background-color: dodgerblue;
     color: white;
-    padding: 3px 5px;
+    border: none;
+    padding: 8px 10px;
     align-self: center;
+    cursor: pointer;
+}
+
+.button:hover{
+    background-color: rgb(6, 86, 167);
 }
 
 div.button {
     margin-top: 20px;
-    margin-left: calc(50% - 50px);
 }
 
 .quiz-question {

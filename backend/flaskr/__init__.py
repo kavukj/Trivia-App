@@ -1,6 +1,7 @@
 from unicodedata import category
 from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import func, exc
 from flask_cors import CORS
 import random
 
@@ -162,6 +163,21 @@ def create_app(test_config=None):
     one question at a time is displayed, the user is allowed to answer
     and shown whether they were correct or not.
     """
+    @app.route("/quizzes",methods=["POST"])
+    def play_quiz():
+        try:
+            id = request.get_json()['quiz_category']
+            previous_questions = request.get_json().get('previous_questions')
+            if(id == -1):
+                question = Question.query.filter(Question.id.not_in(previous_questions)).order_by(func.random()).first().format()
+            else:
+                question = Question.query.filter(Question.category == id).filter(Question.id.not_in(previous_questions)).order_by(func.random()).first().format()
+            return jsonify({
+                'success':True,
+                'currentQuestion':question,  
+            })
+        except:
+            abort(500)
 
     @app.errorhandler(400)
     def bad_request(error):
@@ -194,7 +210,6 @@ def create_app(test_config=None):
             "error": 422,
             "message": "Cannot Process Request"
             }), 422
-
 
     return app
 

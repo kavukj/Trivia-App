@@ -109,6 +109,21 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['error'],404)
         self.assertEqual(data['message'],"Page Not Found")
 
+    #Quiz Cases
+    def test_quiz_questions(self):
+        res = self.client().post("/quizzes",json={'previous_questions': [],'quiz_category':'4'})
+        data = json.loads(res.data)
+        self.assertEqual(res.status_code,200)
+        self.assertEqual(data['success'],True)
+        self.assertTrue(data['currentQuestion'])
+
+    def test_quiz_questions_wrong_parameter(self):
+        res = self.client().post("/quizzes",json={'questions': [],'quiz_category':4})
+        data = json.loads(res.data)
+        self.assertEqual(res.status_code,500)
+        self.assertEqual(data['success'],False)
+        self.assertEqual(data['message'],'Internal Server Error')
+
 if __name__ == "__main__":
         unittest.main()
 

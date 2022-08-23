@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import '../stylesheets/QuizView.css';
 
-const questionsPerPlay = 5;
+const questionsPerPlay = 4;
 
 class QuizView extends Component {
   constructor(props) {
@@ -34,8 +34,8 @@ class QuizView extends Component {
     });
   }
 
-  selectCategory = ({ type, id = 0 }) => {
-    this.setState({ quizCategory: { type, id } }, this.getNextQuestion);
+  selectCategory = ({ id = -1 }) => {
+    this.setState({ quizCategory: id }, this.getNextQuestion);
   };
 
   handleChange = (event) => {
@@ -47,7 +47,6 @@ class QuizView extends Component {
     if (this.state.currentQuestion.id) {
       previousQuestions.push(this.state.currentQuestion.id);
     }
-
     $.ajax({
       url: '/quizzes', //TODO: update request URL
       type: 'POST',
@@ -65,9 +64,9 @@ class QuizView extends Component {
         this.setState({
           showAnswer: false,
           previousQuestions: previousQuestions,
-          currentQuestion: result.question,
+          currentQuestion: result.currentQuestion,
           guess: '',
-          forceEnd: result.question ? false : true,
+          forceEnd: result.currentQuestion ? false : true,
         });
         return;
       },
@@ -114,7 +113,7 @@ class QuizView extends Component {
                 value={id}
                 className='play-category'
                 onClick={() =>
-                  this.selectCategory({ type: this.state.categories[id], id })
+                  this.selectCategory({ id })
                 }
               >
                 {this.state.categories[id]}
@@ -162,8 +161,7 @@ class QuizView extends Component {
         </div>
         <div className='quiz-answer'>{this.state.currentQuestion.answer}</div>
         <div className='next-question button' onClick={this.getNextQuestion}>
-          {' '}
-          Next Question{' '}
+          Next Question
         </div>
       </div>
     );
