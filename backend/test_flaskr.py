@@ -124,6 +124,14 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['success'],False)
         self.assertEqual(data['message'],'Internal Server Error')
 
+    def test_quiz_questions_wrong_categoryId(self):
+        res = self.client().post("/quizzes",json={'previous_questions': [],'quiz_category':9})
+        data = json.loads(res.data)
+        self.assertEqual(res.status_code,500)
+        self.assertEqual(data['success'],False)
+        self.assertEqual(data['message'],'Internal Server Error')
+
+
 if __name__ == "__main__":
         unittest.main()
 
