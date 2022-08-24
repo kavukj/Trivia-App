@@ -1,5 +1,5 @@
 from unicodedata import category
-from flask import Flask, request, abort, jsonify
+from flask import Flask, request, abort, jsonify, redirect
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func, exc
 from flask_cors import CORS
@@ -31,7 +31,7 @@ def create_app(test_config=None):
 
     @app.route("/")
     def index():
-        return "Hello"
+        return redirect("questions")
 
     '''Route to Get all questions'''
     @app.route("/questions",methods=["GET"])
