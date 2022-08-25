@@ -1,49 +1,65 @@
-# API Development and Documentation Final Project
+# Trivia App
 
-## Trivia App
+This project is a quiz game where you can increase you general knowledge and have fun. You can view multiple questions from a list of categories available to the user and also create questions on your own for all the categories available.
+You can also play the trivia quiz and check your knowledge for different categories. When given wrong answer, you will be prompted with correct answer. You can play the quiz for any number of times with all or any one category.  
 
-Udacity is invested in creating bonding experiences for its employees and students. A bunch of team members got the idea to hold trivia on a regular basis and created a webpage to manage the trivia app and play the game, but their API experience is limited and still needs to be built out.
+All backend code follows PEP8 style guidelines and frontend follows ES6 pattern.
 
-That's where you come in! Help them finish the trivia app so they can start holding trivia and seeing who's the most knowledgeable of the bunch. The application must:
+## Getting Started
 
-1. Display questions - both all questions and by category. Questions should show the question, category and difficulty rating by default and can show/hide the answer.
-2. Delete questions.
-3. Add questions and require that they include question and answer text.
-4. Search for questions based on a text query string.
-5. Play the quiz game, randomizing either all questions or within a specific category.
+### Pre Requisites and Local Develpoment
 
-Completing this trivia app will give you the ability to structure plan, implement, and test an API - skills essential for enabling your future applications to communicate with others.
-
-## Starting and Submitting the Project
-
-[Fork](https://help.github.com/en/articles/fork-a-repo) the project repository and [clone](https://help.github.com/en/articles/cloning-a-repository) your forked repository to your machine. Work on the project locally and make sure to push all your changes to the remote repository before submitting the link to your repository in the Classroom.
-
-## About the Stack
-
-We started the full stack application for you. It is designed with some key functional areas:
+Developers working on this project should have python3, pip and node installed on  their system.
 
 ### Backend
 
-The [backend](./backend/README.md) directory contains a partially completed Flask and SQLAlchemy server. You will work primarily in `__init__.py` to define your endpoints and can reference models.py for DB and SQLAlchemy setup. These are the files you'd want to edit in the backend:
+To start working on the backend folder for this project, you need to install all the dependencies which are mentioned in file requirement.txt within the backend folder. Run this command to install all dependencies:
+    pip install requirement.txt
 
-1. `backend/flaskr/__init__.py`
-2. `backend/test_flaskr.py`
+Once the installations are done, run following command to run the backend server on your system in development environment.
+1. If you are on windows cmd:
+    ```
+    set FLASK_APP= flaskr
+    set FLASK_ENV = development
+    flask run
+    ```
 
-> View the [Backend README](./backend/README.md) for more details.
+2. If you are on linux:
+    ```
+    $env:FLASK_APP=flaskr
+    $env:FLASK_ENV=development
+    flask run
+    ```
+
+3. If you are on mac:
+    ```
+    export FLASK_APP = flaskr
+    export FLASK_ENV = development
+    flask run
+    ```
+
+#### Note: Make sure to run the flask run command from backend directory and not inside flaskr directory.
+
+These commands will redirect our application use `__init.py` and load the server. The server runs on `http://127.0.0.1:5000/` by default. When we open this URL, the application will redirect to index.
 
 ### Frontend
 
-The [frontend](./frontend/README.md) directory contains a complete React frontend to consume the data from the Flask server. If you have prior experience building a frontend application, you should feel free to edit the endpoints as you see fit for the backend you design. If you do not have prior experience building a frontend application, you should read through the frontend code before starting and make notes regarding:
+For the frontend dependencies, we have a file named package.json where all the dependencies are mentioned. We need to install them.
+to install them run the command from frontend folder:
 
-1. What are the end points and HTTP methods the frontend is expecting to consume?
-2. How are the requests from the frontend formatted? Are they expecting certain parameters or payloads?
+    ```
+    npm install
+    ```
 
-Pay special attention to what data the frontend is expecting from each API response to help guide how you format your API. The places where you may change the frontend behavior, and where you should be looking for the above information, are marked with `TODO`. These are the files you'd want to edit in the frontend:
+To start the frontend application, run:
 
-1. `frontend/src/components/QuestionView.js`
-2. `frontend/src/components/FormView.js`
-3. `frontend/src/components/QuizView.js`
+    ```
+    npm run start
+    ```
 
-By making notes ahead of time, you will practice the core skill of being able to read and understand code and will have a simple plan to follow to build out the endpoints of your backend API.
+By default, the frontend local runs on port 3000. i.e. `http://localhost:3000/`
 
-> View the [Frontend README](./frontend/README.md) for more details.
+## Tests
+
+
+
