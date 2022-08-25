@@ -83,15 +83,18 @@ def create_app(test_config=None):
         answer = body.get('answer',None)
         difficulty = body.get('difficulty',None)
         category=body.get('category',None)
-
-        try:
-            question = Question(question=question,answer=answer,difficulty=difficulty,category=category)
-            question.insert()
-            return jsonify({
-                'success':True
+        if(body):
+            try:
+                question = Question(question=question,answer=answer,difficulty=difficulty,category=category)
+                question.insert()
+                return jsonify({
+                    'success':True
             })
-        except:
-            abort(500)
+            except:
+                abort(500)
+        else:
+            abort(400)
+        
     """
     @TODO:
     Create a POST endpoint to get questions based on a search term.
@@ -119,22 +122,26 @@ def create_app(test_config=None):
                     'current_category':None
                 })  
             else:
-                abort(404)
+                abort(422)
         except:
-                abort(404)
+                abort(422)
 
 
     '''Route to Get all categories'''
-    @app.route('/categories')
+    @app.route('/categories', methods=["GET"])
     def categories():
-        data = Category.query.all()
-        categories = {}
-        for category in data:
-            categories[category.id] = category.type
+        try:
+            data = Category.query.all()
+            categories = {}
+            for category in data:
+                categories[category.id] = category.type
 
-        return jsonify({
-            'categories': categories
-        })
+            return jsonify({
+                'success':True,
+                'categories': categories
+            })
+        except:
+            abort(400)
 
     '''Route to Get all question for a specific category'''
     @app.route("/categories/<id>/questions",methods=["GET"])

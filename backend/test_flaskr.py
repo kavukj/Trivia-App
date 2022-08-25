@@ -61,7 +61,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['message'],"Page Not Found")
 
     #Create Questions
-    def create_question(self):
+    def test_create_question(self):
         res = self.client().post("/questions",json={'question':'Where is Taj Mahal?','answer':'Agra','difficulty':'2','category':4})
         data = json.loads(res.data)
         self.assertEqual(res.status_code,200)
@@ -74,7 +74,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['message'],'Bad Request')
 
     #Delete Questions
-    def delete_question(self):
+    def test_delete_question(self):
         res=self.client().delete("/questions/15")
         data = json.loads(res.data)
         question = Question.query.filter(Question.id==4).one_or_none()
@@ -105,9 +105,9 @@ class TriviaTestCase(unittest.TestCase):
     def test_questions_with_wrong_search_parameter(self):
         res = self.client().post("/search",json={"searc":"movie"})
         data = json.loads(res.data)
-        self.assertEqual(res.status_code,404)
-        self.assertEqual(data['error'],404)
-        self.assertEqual(data['message'],"Page Not Found")
+        self.assertEqual(res.status_code,422)
+        self.assertEqual(data['error'],422)
+        self.assertEqual(data['message'],"Cannot Process Request")
 
     #Quiz Cases
     def test_quiz_questions(self):
