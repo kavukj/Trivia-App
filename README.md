@@ -38,28 +38,52 @@ Once the installations are done, run following command to run the backend server
     flask run
     ```
 
-#### Note: Make sure to run the flask run command from backend directory and not inside flaskr directory.
+##### Note: Make sure to run the flask run command from backend directory and not inside flaskr directory.
 
 These commands will redirect our application use `__init.py` and load the server. The server runs on `http://127.0.0.1:5000/` by default. When we open this URL, the application will redirect to index.
 
+The backend directory structure follows a model.py file where all the database and table creations are written. The route controllers are written inside the init.py file.
+
+For application backend handling, we need to setup the database and table. For this purpose, run following command:
+    ```
+    dropdb fsnd
+    createdb fsnd
+    psql fsnd < trivia.psql
+    ```
+##### Note: Omit dropdb command if running the project for the first time. You can change the database name as per your convinience. Make sure to make the reuqired changes in model.py file.
+
 ### Frontend
 
-For the frontend dependencies, we have a file named package.json where all the dependencies are mentioned. We need to install them.
-to install them run the command from frontend folder:
-
+For the frontend we have used React.JS. We have a file named package.json where all the dependencies are mentioned to run the application locally. We need to install them.
+To install the packages, run the command from frontend folder:
     ```
     npm install
     ```
 
 To start the frontend application, run:
-
     ```
     npm run start
     ```
 
 By default, the frontend local runs on port 3000. i.e. `http://localhost:3000/`
 
+For frontend, all the styling related files are inside the stylesheets directory. the UI is divided into various components and there inside the directory named components.
+
 ## Tests
+
+For this project, we also have a test file where test cases for all the routes are written. To run them successfully, we need to have our test database setup completed.
+For this purpose, navigate to backend folder and run following commands:
+    ```
+    dropdb trivia_test
+    createdb trivia_test
+    psql trivia_test > trivia.psql
+    ```
+
+All the test cases are written in file named test_flaskr.py. All the test cases should be maintained with the latest updates as per the application functionality. To run the file,
+    ```
+    python test_flaskr.py
+    ```
+
 
 
 
