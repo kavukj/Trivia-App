@@ -99,19 +99,19 @@ Current version of our project only works on local and is not hostel on any plat
 ### Error Handling
 For our API's failing, a json object will be returned in following format:
 
-```
-response: {
-    'success':False,
-    'message':"Not Found",
-    'error':400
-}
-```
+    ```
+    response: {
+        'success':False,
+        'message':"Not Found",
+        'error':400
+    }
+    ```
 
 Our API's will be returning four types of error on failure. They are:
-    1. 404 - Cannot Process Request
-    2. 400 - Bad Request
-    3. 404 - Page Not Found
-    4. 500 - Internal Server Error
+1. 404 - Cannot Process Request
+2. 400 - Bad Request
+3. 404 - Page Not Found
+4. 500 - Internal Server Error
 
 ### Error Handling
 
@@ -122,7 +122,7 @@ Our API's will be returning four types of error on failure. They are:
 - General:
     - Returns a list of all questions irrespective of any category with the response json containing total questions count, success value, array of all questions and all the categories.
 - Sample:
-    - curl http://127.0.0.1:5000/questions
+    - `curl http://127.0.0.1:5000/questions`
 - Response:
     ```
     {
@@ -163,7 +163,7 @@ Our API's will be returning four types of error on failure. They are:
 - General:
     - Returns a list of all categories with the response json containing all categories and success value.
 - Sample:
-    - curl http://127.0.0.1:5000/categories
+    - `curl http://127.0.0.1:5000/categories`
 - Response:
     ```
     {
@@ -184,7 +184,7 @@ Our API's will be returning four types of error on failure. They are:
 - General:
     - Returns a list of all questions belonging to any selected category with the response json containing array of questions for that category, success value, total questions count and current category.
 - Sample:
-    - curl http://127.0.0.1:5000/categories/1/questions
+    -  `curl http://127.0.0.1:5000/categories/1/questions`
 - Response:
     ```
     {
@@ -203,14 +203,14 @@ Our API's will be returning four types of error on failure. They are:
     }
     ```
 
-#### delete endpoints
+#### Delete endpoints
 
 1. DELETE /questions/{id}
 
 - General:
     - Deletes the question based on question id given if it exists. After deleting the valid question, returns a json repsonse containing array of remaining questions, success value, total questions count and list of all categories.
 - Sample:
-    - curl http://127.0.0.1:5000/categories/1/questions -X DELETE
+    - `curl http://127.0.0.1:5000/categories/1/questions -X DELETE`
 - Response:
     ```
     {
@@ -255,14 +255,14 @@ Our API's will be returning four types of error on failure. They are:
     }
     ```
 
-#### post endpoints
+#### Post endpoints
 
 1. POST /questions
 
 - General:
     - Creates a new question using the submitted question, answer and category and difficulty level with the response json containing success value.
 - Sample:
-    - curl http://127.0.0.1:5000/questions -X POST -H "Content-Type:application/json" -d '{"question":"Where is Taj Mahal situated?","answer":"Agra","difficulty":2,"category":4}'
+    - `curl http://127.0.0.1:5000/questions -X POST -H "Content-Type:application/json" -d '{"question":"Where is Taj Mahal situated?","answer":"Agra","difficulty":2,"category":4}'`
 - Response:
     ```
     {
@@ -275,7 +275,7 @@ Our API's will be returning four types of error on failure. They are:
 - General:
     - Searches for a list of questions based on the search term provided with the response json containing array of all questions matching the searc term, success value, total questions count and list of all categories.
 - Sample:
-    - curl http://127.0.0.1:5000/search -X POST -H "Content-Type:application/json" -d '{"searchTerm":"Taj"}'
+    - `curl http://127.0.0.1:5000/search -X POST -H "Content-Type:application/json" -d '{"searchTerm":"Taj"}'`
 - Response:
     ```
     {
@@ -317,7 +317,7 @@ Our API's will be returning four types of error on failure. They are:
 - General:
     - Returns a random question based on the category id given with a response json containing a success value and currentQuestion.
 - Sample:
-    - curl http://127.0.0.1:5000/quizzes -X POST -H "Content-Type:application/json" -d '{"quiz_category":"1","previous_questions":[]}'
+    - `curl http://127.0.0.1:5000/quizzes -X POST -H "Content-Type:application/json" -d '{"quiz_category":"1","previous_questions":[]}'`
 - Response:
     ```
     {
