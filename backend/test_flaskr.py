@@ -5,13 +5,14 @@ import unittest
 from flaskr import create_app
 from models import setup_db, Question
 from flask_sqlalchemy import SQLAlchemy
+from settings import DB_PASS,DB_TEST,DB_USER
 
 
 class TriviaTestCase(unittest.TestCase):
     def setUp(self):
         self.app = create_app()
         self.client = self.app.test_client
-        self.database = "postgresql://jaink:Kavya1998@localhost:5432/trivia_test"
+        self.database = "postgresql://"+DB_USER+":"+DB_PASS+"@localhost:5432/"+DB_TEST
         setup_db(self.app,self.database)
 
         
